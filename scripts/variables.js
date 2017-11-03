@@ -93,7 +93,7 @@ window.onload = function () {
 				predictionInterval = 1000 * 60 * 60 * 12;
 			}
 		};
-		xhr.open('GET', 'BackEnd/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+		xhr.open('GET', webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
 		xhr.send();
 	}
 	else {
@@ -109,6 +109,9 @@ window.onload = function () {
 
 				webserviceURL = 'BackEnd';
 			}
+			
+			console.log('WS set to: ' + this.responseText);
+			
 			xhr = new XMLHttpRequest();
 			xhr.onload = function() {
 
@@ -126,7 +129,7 @@ window.onload = function () {
 					predictionInterval = 1000 * 60 * 60 * 12;
 				}
 			};
-			xhr.open('GET', 'BackEnd/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+			xhr.open('GET', webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
 			xhr.send();
 		};
 		xhr.onloadend = function() {
