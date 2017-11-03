@@ -9,143 +9,21 @@
  * Global module of the application.
  */
 
-var Identificable = function (data) {
-
-	return {
-
-		id : data[0],
-		name : data[1]
-	};
-};
-
 var plotData;
 var plotCache;
 var plotColors;
 
 var devcounter;
+var webserviceURL;
 var linkFromTheAbyss;
 var enablePlotCaching;
 var plotInOnlyOneGraph;
 var enableCarouselView;
 var predictionInterval;
 
-var Webservice = function (self) {
-
-	self.URL = '';
-	self.blackboxURL = '';
-
-	return {
-
-		setURL : function (value) {
-			
-			self.URL = value;
-		},
-	
-		getURL : function () {
-
-			return  self.URL;
-		},
-		
-		getBlackBoxPort : function () {
-
-			return self.blackboxPort;
-		},
-
-		setBlackBoxPort : function (value) {
-
-			self.blackboxPort = value;
-		},
-		
-		getBlackBoxURL : function () {
-			
-			return self.blackboxURL;
-		},
-
-		setBlackBoxURL : function (value) {
-
-			self.blackboxURL = value;
-		}
-	};
-};
-
-Webservice = new Webservice({});
-
-var Session = function (self) {
-
-	self.user = '';
-	self.type = '';
-	self.token = '';
-
-	return {
-
-		getUsername : function () {
-
-			return self.user;
-		},
-
-		init: function (data) {
-
-			data = new Identificable( data.split('|') );
-
-			try {
-
-				self.user = atob( data.name );
-				self.type = 'admin';//FIXME for display certains modules
-				self.token = atob( data.id );
-				window.setCookie('session', data.id + '|' + data.name );
-
-				return true;
-			}
-			catch (e) {
-			}
-
-			return false;
-		},
-
-		destroy : function () {//rename to destroy
-
-			self.user = '';
-			self.type = '';
-			self.token = '';
-
-			window.setCookie('session', '', 7);
-		},
-
-		validate : function () {
-
-			//TODO validate from server
-			if ( (self.token + self.type + self.user) === '' ) {
-
-				var cookie = window.getCookie('session');
-
-				if ( cookie !== '' ) {
-
-					this.destroy();
-					this.init(cookie);
-					return this.validate();
-				}
-			}
-			else {
-
-				return true;
-			}
-
-			return false;
-		},
-
-		check : function () {
-			
-			if ( !this.validate() && location.hash.substr(3) !== 'login' ) {
-
-				location.href = '#!/login';
-			}
-		}
-	};
-};
-
-Session = new Session({});
-
 window.onload = function () {
+
+	document.getElementsByTagName('title')[0].innerHTML = 'WineAI';
 
 	if ( location.protocol !== 'http:' ) {
 
@@ -156,89 +34,111 @@ window.onload = function () {
 	plotData = null;
 	plotCache = null;
 	plotColors = [
-		'233, 30, 99',
-		'156, 39, 176',
+		'233,30,99',
+		'0,150,136',
 		'103, 58, 183',
-		'0, 150, 136',
-		'255, 193, 7',
-		'255, 106, 0'];
+		'255,62,31',
+		'255, 152, 0',
+		'7, 174, 21',
+		'156, 39, 176'];
 
 	devcounter = 0;
 	linkFromTheAbyss = null;
 	enablePlotCaching = false;
 	plotInOnlyOneGraph = false;
 	enableCarouselView = false;
-	predictionInterval = 1000 * 60 * 60 * 12;
+	predictionInterval;
 
 	var n;
+	var xhr;
 
 	n = parseInt(window.getCookie('prediction_interval'));
+
 	if ( !isNaN(n) ) {
 		
 		predictionInterval = n;
 	}
+	else {
+		
+		predictionInterval = 1000 * 60 * 60 * 12;
+	}
 
 	n = parseInt(window.getCookie('devcounter'));
+
 	if ( !isNaN(n) ) {
 
 		devcounter = n;
-	}
-
-	n = window.getCookie('blackboxURL');
-
-	if ( n !== '' ) {
-		
-		Webservice.setBlackBoxURL(n);
-	}
-	else {
-
-		Webservice.setBlackBoxURL('127.0.0.1');
-	}
-
-	n = window.getCookie('blackboxPort');
-
-	if ( n !== '' ) {
-
-		Webservice.setBlackBoxPort(n);
-	}
-	else {
-
-		Webservice.setBlackBoxPort('8000');
 	}
 	
 	n = window.getCookie('webserviceURL');
 
 	if ( n !== '' ) {
 		
-		Webservice.setURL(n);
-	}
-	else {
+		webserviceURL = n;
 
-		var xhr = new XMLHttpRequest();
+		xhr = new XMLHttpRequest();
 		xhr.onload = function() {
 
-			if ( this.responseText !== '' ) {
+			predictionInterval = parseInt(this.responseText);
 
-				Webservice.setURL(this.responseText);
-			}
-			else {
+			if ( isNaN( predictionInterval ) ) {
 
-				Webservice.setURL('BackEnd');
+				predictionInterval = 1000 * 60 * 60 * 12;
 			}
 		};
 		xhr.onloadend = function() {
 
 			if( xhr.status !== 200 ) {
 
+				predictionInterval = 1000 * 60 * 60 * 12;
+			}
+		};
+		xhr.open('GET', 'BackEnd/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+		xhr.send();
+	}
+	else {
+
+		xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+
+			if ( this.responseText !== '' ) {
+
+				webserviceURL = this.responseText;
+			}
+			else {
+
+				webserviceURL = 'BackEnd';
+			}
+			xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+
+				predictionInterval = parseInt(this.responseText);
+
+				if ( isNaN( predictionInterval ) ) {
+
+					predictionInterval = 1000 * 60 * 60 * 12;
+				}
+			};
+			xhr.onloadend = function() {
+
+				if( xhr.status !== 200 ) {
+
+					predictionInterval = 1000 * 60 * 60 * 12;
+				}
+			};
+			xhr.open('GET', 'BackEnd/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+			xhr.send();
+		};
+		xhr.onloadend = function() {
+
+			if( xhr.status !== 200 ) {
+
 				console.log('Setting Default Webservice for Error: ' + xhr.status);
-				Webservice.setURL('http://' + location.hostname + '/PT2/WineAI/BackEnd');
+				webserviceURL = 'http://' + location.hostname + '/WineAI/BackEnd';
 			}
 		};
 		xhr.open('GET', 'BackEnd/var/getValue.php?variable=WEBSERVICE_URL', true);
 		xhr.send();
 	}
 
-	Session.check();
-	document.getElementsByTagName('title')[0].innerHTML = 'WineAI Viewer';
 };
-

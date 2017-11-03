@@ -9,6 +9,15 @@
  * Global module of the application.
  */
 
+var Identificable = function (data) {
+
+	return {
+
+		id : data[0],
+		name : data[1]
+	};
+};
+ 
 function rng(min, max) {
 
 	return Math.floor(Math.random()*(max-min+1)+min);
@@ -71,6 +80,7 @@ function formatTime(s) {
 
 var avoidWarnings = function () {
 
+	avoidWarnings = Identificable;
 	avoidWarnings = rng;
 	avoidWarnings = formatTime;
 	avoidWarnings = isOnMobile;

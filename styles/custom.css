@@ -8,6 +8,184 @@ html, body, main, .ng-scope-main {
 	cursor: default;
 }
 
+.form-container {
+	
+	width: 320px;
+	white-space: normal;
+	background: white;
+	display: inline-block;
+	height: 60%;
+	vertical-align: top;
+}
+
+.resilence {
+	
+	font-size: 36px;
+	text-shadow: #000 0px 0px 5px !important;
+}
+
+.relentess {
+	
+	font-size: 15px;
+	text-shadow: #000 0px 0px 5px !important;
+}
+
+.novita {
+	
+	background: #3f51b5;
+}
+
+.slider, .slides {
+
+	background-color: transparent !important;
+	height: 100% !important;
+}
+
+.view-container {
+
+	white-space: normal;
+	display: block;
+	height: 40%;
+
+	width: 100%;
+	vertical-align: top;
+	text-align: left;
+	
+	background-color: #520f2b;
+	background-image: url('../images/logo.png');
+	background-size: auto 90%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.boomking {
+	
+	width: 300px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.login-input {
+
+	height: 44px;
+	width: 100%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+
+    font-size: 16px;
+    font-family: Atlas Grotesk Web, Open Sans, sans-serif;
+    font-weight: 400;
+
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.bambloozed {
+
+	width: 100%;
+	text-align: left;
+    font-size: 25px;
+    line-height: 1.14286;
+    font-family: SharpGrotesk, Open Sans, sans-serif;
+    font-weight: 400;
+	display: inline-block;
+	margin-bottom: 15px;
+}
+
+.login-button {
+
+	cursor: pointer;
+	color: white;
+
+	margin-top: 15px;
+	margin-bottom: 15px;
+	width: 100%;
+
+	background-color: #87244d;
+    background-image: none;
+    border-radius: 0;
+    height: 44px;
+    font-size: 16px;
+    font-family: Atlas Grotesk Web, Open Sans, sans-serif;
+    font-weight: 400;
+	
+	border: none;
+}
+
+ /* label focus color */
+.input-field input[type=text]:focus + label,
+.input-field input[type=password]:focus + label {
+	color: #db7394;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=password]:focus {
+
+	border-bottom: 1px solid #db7394;
+	box-shadow: 0 1px 0 0 #db7394;
+}
+
+.login-button:focus {
+
+	background-color: #db7394;
+}
+
+.regend {
+
+	height: 150px;
+	width: 150px;
+	
+	margin-bottom: 30px;
+	
+	display: none;
+	background: url('../images/logo.png');
+	background-size: auto 99%;
+	vertical-align: top;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 420px) {
+
+	.regend {
+
+		display: none;
+	}
+
+	.view-container {
+
+		width: calc(100% - 420px);
+		display: inline-block !important;
+		height: 100%;
+	}
+
+	.form-container {
+
+		width: 420px;
+		height: 100%;
+	}
+
+	.login-box {
+
+		width: 300px;
+	}
+
+	.resilence {
+		
+		font-size: 60px;
+	}
+
+	.relentess {
+		
+		font-size: 30px;
+	}
+}
+
+
+
+
+
+
 .mekkatorque {
 	
 	display: inline-block;
@@ -165,11 +343,13 @@ html, body, main, .ng-scope-main {
 }
 
 .blindfold {
-	
+
 	width: 100%;
 	height: 100%;
 	
 	cursor: default;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .custom-nav {
