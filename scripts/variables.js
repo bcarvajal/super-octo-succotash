@@ -74,7 +74,7 @@ window.onload = function () {
 
 	if ( n !== '' ) {
 		
-		webserviceURL = n;
+		window.webserviceURL = n;
 
 		xhr = new XMLHttpRequest();
 		xhr.onload = function() {
@@ -93,7 +93,7 @@ window.onload = function () {
 				predictionInterval = 1000 * 60 * 60 * 12;
 			}
 		};
-		xhr.open('GET', webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+		xhr.open('GET', window.webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
 		xhr.send();
 	}
 	else {
@@ -103,14 +103,15 @@ window.onload = function () {
 
 			if ( this.responseText !== '' ) {
 
-				webserviceURL = this.responseText;
+				window.webserviceURL = this.responseText;
 			}
 			else {
 
-				webserviceURL = 'BackEnd';
+				window.webserviceURL = 'BackEnd';
 			}
 			
 			console.log('WS set to: ' + this.responseText);
+			window.setCookie('webserviceURL', this.responseText);
 			
 			xhr = new XMLHttpRequest();
 			xhr.onload = function() {
@@ -129,7 +130,7 @@ window.onload = function () {
 					predictionInterval = 1000 * 60 * 60 * 12;
 				}
 			};
-			xhr.open('GET', webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+			xhr.open('GET', window.webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
 			xhr.send();
 		};
 		xhr.onloadend = function() {
@@ -137,7 +138,7 @@ window.onload = function () {
 			if( xhr.status !== 200 ) {
 
 				console.log('Setting Default Webservice for Error: ' + xhr.status);
-				webserviceURL = 'http://' + location.hostname + '/WineAI/BackEnd';
+				window.webserviceURL = 'http://' + location.hostname + '/WineAI/BackEnd';
 			}
 		};
 		xhr.open('GET', 'BackEnd/var/getValue.php?variable=WEBSERVICE_URL', true);
