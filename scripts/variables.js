@@ -14,7 +14,7 @@ var plotCache;
 var plotColors;
 
 var devcounter;
-var webserviceURL;
+var webserviceURL = "http://informatica-unab-vm.cl/wineai/BackEnd";
 var linkFromTheAbyss;
 var enablePlotCaching;
 var plotInOnlyOneGraph;
@@ -73,76 +73,20 @@ window.onload = function () {
 	n = window.getCookie('webserviceURL');
 
 	if ( n !== '' ) {
-		
+
 		window.webserviceURL = n;
-
-		xhr = new XMLHttpRequest();
-		xhr.onload = function() {
-
-			predictionInterval = parseInt(this.responseText);
-
-			if ( isNaN( predictionInterval ) ) {
-
-				predictionInterval = 1000 * 60 * 60 * 12;
-			}
-		};
-		xhr.onloadend = function() {
-
-			if( xhr.status !== 200 ) {
-
-				predictionInterval = 1000 * 60 * 60 * 12;
-			}
-		};
-		xhr.open('GET', window.webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
-		xhr.send();
-	}
-	else {
-
-		xhr = new XMLHttpRequest();
-		xhr.onload = function() {
-
-			if ( this.responseText !== '' ) {
-
-				window.webserviceURL = this.responseText;
-			}
-			else {
-
-				window.webserviceURL = 'BackEnd';
-			}
-			
-			console.log('WS set to: ' + this.responseText);
-			window.setCookie('webserviceURL', this.responseText);
-			
-			xhr = new XMLHttpRequest();
-			xhr.onload = function() {
-
-				predictionInterval = parseInt(this.responseText);
-
-				if ( isNaN( predictionInterval ) ) {
-
-					predictionInterval = 1000 * 60 * 60 * 12;
-				}
-			};
-			xhr.onloadend = function() {
-
-				if( xhr.status !== 200 ) {
-
-					predictionInterval = 1000 * 60 * 60 * 12;
-				}
-			};
-			xhr.open('GET', window.webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
-			xhr.send();
-		};
-		xhr.onloadend = function() {
-
-			if( xhr.status !== 200 ) {
-
-				console.log('Setting Default Webservice for Error: ' + xhr.status);
-				window.webserviceURL = 'http://' + location.hostname + '/WineAI/BackEnd';
-			}
-		};
-		xhr.open('GET', 'BackEnd/var/getValue.php?variable=WEBSERVICE_URL', true);
-		xhr.send();
 	}
 
+	xhr = new XMLHttpRequest();
+	xhr.onload = function() {
+
+		predictionInterval = parseInt(this.responseText);
+
+		if ( isNaN( predictionInterval ) ) {
+
+			predictionInterval = 1000 * 60 * 60 * 12;
+		}
+	};
+	xhr.open('GET', window.webserviceURL + '/var/getValue.php?variable=PREDICCION_INTERVALO', true);
+	xhr.send();
 };
