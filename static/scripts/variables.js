@@ -14,7 +14,7 @@ var plotCache;
 var plotColors;
 
 
-var webstaticURL = "http://wineai.ddns.net/static";
+var webstaticURL = "static";
 var webserviceURL = "http://wineai.ddns.net/BackEnd";
 
 
