@@ -14,9 +14,9 @@ var plotCache;
 var plotColors;
 
 
-var webstaticURL = "static";
-var webserviceURL = "http://wineai.ddns.net/WineAI/BackEnd";
-webserviceURL = "http://informatica-unab-vm.cl/wineai/BackEnd";
+var webstaticURL = "http://wineai.ddns.net/static";
+var webserviceURL = "http://wineai.ddns.net/BackEnd";
+
 
 var devcounter;
 var enableAnimations;
