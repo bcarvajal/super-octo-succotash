@@ -9,14 +9,14 @@
  * Global module of the application.
  */
 
+var feika = '/test';
 var plotData;
 var plotCache;
 var plotColors;
 
 
 var webstaticURL = "static";
-var webserviceURL = "http://wineai.ddns.net/BackEnd";
-
+var webserviceURL = "http://informatica-unab-vm.cl/wineai/BackEnd/";
 
 var devcounter;
 var enableAnimations;
