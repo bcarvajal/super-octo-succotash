@@ -16,7 +16,7 @@ var plotColors;
 
 
 var webstaticURL = "static";
-var webserviceURL = "http://informatica-unab-vm.cl/wineai/BackEnd/";
+var webserviceURL = "http://informatica-unab-vm.cl/wineai/BackEnd";
 
 var devcounter;
 var enableAnimations;
