@@ -15,10 +15,12 @@ var plotCache;
 var plotColors;
 
 
-var webstaticURL = "static";
+var webstaticURL = "http://localhost/WineAI/static";
 var webserviceURL = "http://informatica-unab-vm.cl/wineai/BackEnd";
 
+
 var devcounter;
+var devtabindex;
 var enableAnimations;
 var linkFromTheAbyss;
 var enablePlotCaching;
@@ -48,6 +50,7 @@ window.onload = function () {
 		'156, 39, 176'];
 
 	devcounter = 0;
+	devtabindex = null;
 	linkFromTheAbyss = null;
 	enablePlotCaching = false;
 	plotInOnlyOneGraph = false;

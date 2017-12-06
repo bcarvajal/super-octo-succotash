@@ -1,3 +1,26 @@
+.tab {
+	
+	background: white;
+}
+
+a {
+	background: #cfd8dc !important;
+	color: gray !important;
+}
+
+.indicator {
+	
+	background-color: transparent !important;
+}
+
+a.active {
+
+	color: #382e2e !important;
+	background: transparent !important;
+	transition: none !important;
+	cursor: default !important;
+}
+
 html, body, main, .ng-scope-main {
 
 	width: 100%;
